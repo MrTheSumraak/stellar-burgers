@@ -1,5 +1,5 @@
-import { BurgerConstructorUI } from '@ui';
 import type { Meta, StoryObj } from '@storybook/react';
+import { BurgerConstructorUI } from '@ui';
 
 const meta = {
   title: 'Example/BurgerConstructor',
@@ -22,6 +22,7 @@ export const DefaultConstructor: Story = {
     price: 0,
     orderModalData: null,
     onOrderClick: () => {},
-    closeOrderModal: () => {}
+    closeOrderModal: () => {},
+    error: ''
   }
 };

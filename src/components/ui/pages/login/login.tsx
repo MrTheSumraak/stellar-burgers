@@ -14,7 +14,9 @@ export const LoginUI: FC<LoginUIProps> = ({
   errorText,
   handleSubmit,
   password,
-  setPassword
+  setPassword,
+  emailRef,
+  passwordRef
 }) => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
@@ -28,6 +30,7 @@ export const LoginUI: FC<LoginUIProps> = ({
           <div className='pb-6'>
             <Input
               type='email'
+              ref={emailRef}
               placeholder='E-mail'
               onChange={(e) => setEmail(e.target.value)}
               value={email}
@@ -41,6 +44,7 @@ export const LoginUI: FC<LoginUIProps> = ({
             <PasswordInput
               onChange={(e) => setPassword(e.target.value)}
               value={password}
+              ref={passwordRef}
               name='password'
             />
           </div>
@@ -64,7 +68,7 @@ export const LoginUI: FC<LoginUIProps> = ({
       </div>
       <div className={`${styles.question} text text_type_main-default pb-6`}>
         Забыли пароль?
-        <Link to={'/forgot-password'} className={`pl-2 ${styles.link}`}>
+        <Link to='/forgot-password' className={`pl-2 ${styles.link}`}>
           Восстановить пароль
         </Link>
       </div>

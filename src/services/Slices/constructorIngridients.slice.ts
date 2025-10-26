@@ -1,0 +1,62 @@
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
+
+interface IConstructorIngridientsState {
+  currentIngredients: TConstructorIngredient[];
+  bun: TConstructorIngredient | null;
+}
+
+const initialState: IConstructorIngridientsState = {
+  currentIngredients: [],
+  bun: null
+};
+
+const constructorIngridientsSlice = createSlice({
+  name: 'constructorReducer',
+  initialState: initialState,
+  selectors: {
+    getCurrentIngredientSelector: (state) =>
+      state.currentIngredients.map(({ name, price, image }: TIngredient) => ({
+        name,
+        price,
+        image
+      })),
+    getIdBun: (state) => state.bun?._id
+  },
+  reducers: {
+    addIngredient(state, action: PayloadAction<TConstructorIngredient>) {
+      state.currentIngredients.push(action.payload);
+    },
+    setBun(state, action: PayloadAction<TConstructorIngredient>) {
+      state.bun = action.payload;
+    },
+    removeIngredient(state, action: PayloadAction<string>) {
+      state.currentIngredients = state.currentIngredients.filter(
+        (item) => item.id !== action.payload
+      );
+    },
+    clearConstructor(state) {
+      state.currentIngredients = [];
+      state.bun = null;
+    }
+  }
+});
+
+export const setBunWithId = (
+  ingredient: TIngredient
+): PayloadAction<TConstructorIngredient> =>
+  constructorIngridientsSlice.actions.setBun({ ...ingredient, id: nanoid(10) });
+
+export const setIngredientWithId = (
+  ingredient: TIngredient
+): PayloadAction<TConstructorIngredient> =>
+  constructorIngridientsSlice.actions.addIngredient({
+    ...ingredient,
+    id: nanoid(10)
+  });
+
+export const { addIngredient, setBun, removeIngredient, clearConstructor } =
+  constructorIngridientsSlice.actions;
+export const { getCurrentIngredientSelector, getIdBun } =
+  constructorIngridientsSlice.selectors;
+export default constructorIngridientsSlice.reducer;

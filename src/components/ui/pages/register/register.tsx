@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
 import {
-  Input,
   Button,
+  Input,
   PasswordInput
 } from '@zlden/react-developer-burger-ui-components';
-import styles from '../common.module.css';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import styles from '../common.module.css';
 import { RegisterUIProps } from './type';
 
 export const RegisterUI: FC<RegisterUIProps> = ({
@@ -31,11 +31,14 @@ export const RegisterUI: FC<RegisterUIProps> = ({
             <Input
               type='text'
               placeholder='Имя'
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={(e) => {
+                setUserName(e.target.value);
+                console.log(userName);
+              }}
               value={userName}
               name='name'
               error={false}
-              errorText=''
+              errorText='Неккоректный email'
               size='default'
             />
           </div>
@@ -47,7 +50,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               value={email}
               name={'email'}
               error={false}
-              errorText=''
+              errorText='Неккоректный пароль'
               size={'default'}
             />
           </div>
@@ -63,9 +66,10 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               Зарегистрироваться
             </Button>
           </div>
-          {errorText && (
+          {errorText && errorText !== '' && (
             <p className={`${styles.error} text text_type_main-default pb-6`}>
-              {errorText}
+              {errorText === 'User already exists' &&
+                'Пользователь уже существует'}
             </p>
           )}
         </>

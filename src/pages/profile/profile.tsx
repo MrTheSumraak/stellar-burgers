@@ -1,30 +1,49 @@
+import { Preloader } from '@ui';
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { getUserThunk } from '../../services/AsyncThunk/userThunk';
+import {
+  userEmailSelector,
+  userNameSelector
+} from '../../services/Slices/autorizationSlice.slice';
+import { isLoadingLogout } from '../../services/Slices/logoutSlice.slice';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
-  const user = {
-    name: '',
-    email: ''
-  };
+  const userName = useSelector(userNameSelector) ?? '';
+  const emailUser = useSelector(userEmailSelector) ?? '';
+  const isLoading = useSelector(isLoadingLogout);
+  const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
-    name: user.name,
-    email: user.email,
+    name: userName,
+    email: emailUser,
     password: ''
   });
 
+  // useEffect(() => {
+  //   if (!userName || !emailUser) {
+  //     dispatch(getUserThunk());
+  //   }
+  // }, []);
+
   useEffect(() => {
-    setFormValue((prevState) => ({
-      ...prevState,
-      name: user?.name || '',
-      email: user?.email || ''
-    }));
-  }, [user]);
+    setFormValue((prevState) => {
+      if (prevState.name === userName && prevState.email === emailUser)
+        return prevState;
+
+      return {
+        ...prevState,
+        name: userName,
+        email: emailUser
+      };
+    });
+  }, [userName, emailUser]);
 
   const isFormChanged =
-    formValue.name !== user?.name ||
-    formValue.email !== user?.email ||
+    formValue.name !== userName ||
+    formValue.email !== emailUser ||
     !!formValue.password;
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -34,8 +53,8 @@ export const Profile: FC = () => {
   const handleCancel = (e: SyntheticEvent) => {
     e.preventDefault();
     setFormValue({
-      name: user.name,
-      email: user.email,
+      name: userName,
+      email: emailUser,
       password: ''
     });
   };
@@ -47,7 +66,9 @@ export const Profile: FC = () => {
     }));
   };
 
-  return (
+  return isLoading ? (
+    <Preloader />
+  ) : (
     <ProfileUI
       formValue={formValue}
       isFormChanged={isFormChanged}
@@ -56,6 +77,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };
