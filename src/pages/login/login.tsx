@@ -1,7 +1,7 @@
 import { Preloader } from '@ui';
 import { LoginUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { autorizationThunk } from '../../services/AsyncThunk/autorizationUserThunk';
 import {
   errorAuthSelector,
@@ -18,14 +18,16 @@ export const Login: FC = () => {
   const isSuccessAuth = useSelector(isSuccessAuthSelector);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    isSuccessAuth && navigate('/profile');
-  }, [isSuccessAuth]);
-
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(autorizationThunk({ email, password }));
   };
+
+  useEffect(() => {
+    if (isSuccessAuth) {
+      navigate('/profile', { replace: true });
+    }
+  }, [isSuccessAuth, navigate]);
 
   return isLoading ? (
     <Preloader />

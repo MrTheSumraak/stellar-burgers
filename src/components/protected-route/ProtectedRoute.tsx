@@ -1,16 +1,3 @@
-// import { Navigate } from 'react-router-dom';
-// import { getCookie } from '../../utils/cookie';
-
-// type ProtectedRouteProps = {
-//   children: React.ReactElement;
-// };
-
-// export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-//   const accessToken = getCookie('accessToken') || undefined;
-
-//   return !accessToken ? <Navigate to='/login' replace /> : children;
-// };
-
 import { Preloader } from '@ui';
 import { Navigate, useLocation } from 'react-router';
 import {
@@ -66,3 +53,45 @@ export const ProtectedRoute = ({
 
   return children;
 };
+
+// import { Preloader } from '@ui';
+// import { Navigate, useLocation } from 'react-router-dom';
+// import {
+//   getIsAuthCheckSelector,
+//   getIsLoadingSelector,
+//   getUserSelector
+// } from '../../services/Slices/user.slice';
+// import { useSelector } from '../../services/store';
+
+// type ProtectedRouteProps = {
+//   onlyUnAuth?: boolean;
+//   children: React.ReactElement;
+// };
+
+// export const ProtectedRoute = ({
+//   onlyUnAuth = false,
+//   children
+// }: ProtectedRouteProps) => {
+//   const isLoading = useSelector(getIsLoadingSelector); // если нужен
+//   const isAuthCheck = useSelector(getIsAuthCheckSelector);
+//   const user = useSelector(getUserSelector); // должен возвращать либо null либо объект { name, email }
+
+//   const isUserAuthorized = Boolean(user && user.name && user.email);
+
+//   const location = useLocation();
+
+//   // 1) Пока не закончена проверка авторизации — показываем прелоадер и не принимаем решений о навигации
+//   if (!isAuthCheck) return <Preloader />;
+
+//   // 2) После isAuthCheck === true принимаем решение уже на основе store.user
+//   if (!onlyUnAuth && !isUserAuthorized) {
+//     return <Navigate replace to='/login' state={{ from: location }} />;
+//   }
+
+//   if (onlyUnAuth && isUserAuthorized) {
+//     const from = (location.state as any)?.from || { pathname: '/' };
+//     return <Navigate replace to={from} />;
+//   }
+
+//   return children;
+// };

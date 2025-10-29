@@ -38,6 +38,18 @@ const constructorIngridientsSlice = createSlice({
     clearConstructor(state) {
       state.currentIngredients = [];
       state.bun = null;
+    },
+    moveIngredient(
+      state,
+      action: PayloadAction<{ dragIndex: number; hoverIndex: number }>
+    ) {
+      const { dragIndex, hoverIndex } = action.payload;
+      if (dragIndex !== hoverIndex) {
+        const newArr = [...state.currentIngredients];
+        const [removed] = newArr.splice(dragIndex, 1);
+        newArr.splice(hoverIndex, 0, removed);
+        state.currentIngredients = newArr;
+      }
     }
   }
 });
@@ -55,8 +67,13 @@ export const setIngredientWithId = (
     id: nanoid(10)
   });
 
-export const { addIngredient, setBun, removeIngredient, clearConstructor } =
-  constructorIngridientsSlice.actions;
+export const {
+  addIngredient,
+  setBun,
+  removeIngredient,
+  clearConstructor,
+  moveIngredient
+} = constructorIngridientsSlice.actions;
 export const { getCurrentIngredientSelector, getIdBun } =
   constructorIngridientsSlice.selectors;
 export default constructorIngridientsSlice.reducer;

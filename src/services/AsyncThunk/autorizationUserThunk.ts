@@ -1,5 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUserApi, TLoginData } from '../../utils/burger-api';
+import {
+  loginUserApi,
+  resetPasswordApi,
+  TLoginData
+} from '../../utils/burger-api';
 import { setCookie } from '../../utils/cookie';
 
 export const autorizationThunk = createAsyncThunk(
@@ -11,8 +15,23 @@ export const autorizationThunk = createAsyncThunk(
       localStorage.setItem('userEmail', response.user.email);
       localStorage.setItem('refreshToken', response.refreshToken || '');
       setCookie('accessToken', response.accessToken || '');
-      // prompt('success', String(response.success));
-      // console.log(`Токен: ${getCookie('accessToken')}`);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+);
+
+interface IResetPassword {
+  password: string;
+  token: string;
+}
+
+export const resetPaswordThunk = createAsyncThunk(
+  'resetPassword/user',
+  async (props: IResetPassword) => {
+    try {
+      const response = await resetPasswordApi(props);
       return response;
     } catch (error) {
       return Promise.reject(error);

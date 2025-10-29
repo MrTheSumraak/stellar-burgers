@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { autorizationThunk } from '../AsyncThunk/autorizationUserThunk';
+import {
+  autorizationThunk,
+  resetPaswordThunk
+} from '../AsyncThunk/autorizationUserThunk';
 
 type IInitialState = {
   isLoading?: boolean;
@@ -32,14 +35,15 @@ export const autorizationSlice = createSlice({
     isSuccessAuthSelector: (state) => state.success,
     errorAuthSelector: (state) => state.hasError,
     userNameSelector: (state) => state.user?.name,
-    userEmailSelector: (state) => state.user?.email
+    userEmailSelector: (state) => state.user?.email,
+    isloadingAuth: (state) => state.isLoading
   },
   extraReducers: (builder) => {
     builder
       .addCase(autorizationThunk.pending, (state) => {
         state.isLoading = true;
         state.isAuthCheck = false;
-        state.success = false;
+        // state.success = false;
       })
       .addCase(
         autorizationThunk.fulfilled,
@@ -56,6 +60,22 @@ export const autorizationSlice = createSlice({
         state.hasError =
           action.error.message || 'Ошибка авторизации пользователя';
         state.isAuthCheck = true;
+        state.success = false;
+      })
+
+      .addCase(resetPaswordThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+
+      .addCase(resetPaswordThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.success = true;
+      })
+
+      .addCase(resetPaswordThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.success = false;
+        state.hasError = action.error.message;
       });
   }
 });
@@ -65,6 +85,7 @@ export const {
   isSuccessAuthSelector,
   errorAuthSelector,
   userNameSelector,
-  userEmailSelector
+  userEmailSelector,
+  isloadingAuth
 } = autorizationSlice.selectors;
 export default autorizationSlice.reducer;
