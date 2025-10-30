@@ -29,7 +29,7 @@ export const Profile: FC = () => {
     if (!userName || !emailUser) {
       dispatch(getUserThunk());
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setFormValue((prevState) => {
@@ -72,6 +72,7 @@ export const Profile: FC = () => {
       ...prevState,
       [e.target.name]: e.target.value
     }));
+    console.log(formValue);
   };
 
   return isLogoutLoading ? (

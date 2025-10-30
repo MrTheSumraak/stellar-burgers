@@ -18,6 +18,8 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../services/store';
 import { SuccessModalButton } from '../modal/successModal';
 import { ProtectedRoute } from '../protected-route/ProtectedRoute';
+import { useEffect } from 'react';
+import { getUserThunk } from '../../services/AsyncThunk/userThunk';
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -25,6 +27,10 @@ const App = () => {
   const backgroundLocation =
     location.state && (location.state as { background: Location })?.background;
   const navigation = useNavigate();
+
+  // useEffect(() => {
+  //   dispatch(getUserThunk());
+  // }, [dispatch]);
 
   return (
     <>

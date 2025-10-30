@@ -37,7 +37,7 @@ export const Register: FC = () => {
         }
       });
     }
-  }, [isSucess]);
+  }, [isSucess, navigation, location]);
 
   const formData = useMemo(
     () => ({ name: userName, email, password }),
