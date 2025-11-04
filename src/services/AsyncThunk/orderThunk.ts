@@ -21,8 +21,10 @@ export const getFeedsThunk = createAsyncThunk<
 >('order/getOrder', async (_, { rejectWithValue }) => {
   try {
     const response = await getFeedsApi();
+    console.log(response);
     return response;
   } catch (error: any) {
+    console.error(error);
     return rejectWithValue(error?.message || 'Ошибка загрузки заказов');
   }
 });

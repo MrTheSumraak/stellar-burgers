@@ -2,7 +2,8 @@ import { Preloader } from '@ui';
 import { Navigate, useLocation } from 'react-router';
 import {
   getIsAuthCheckSelector,
-  getIsLoadingSelector
+  getIsLoadingSelector,
+  getUserSelector
 } from '../../services/Slices/user.slice';
 import { useSelector } from '../../services/store';
 
@@ -22,12 +23,7 @@ export const ProtectedRoute = ({
 }: ProtectedRouteProps) => {
   const isLoading = useSelector(getIsLoadingSelector); //  isAuthCheckedSelector — селектор получения состояния загрузки пользователя
   const isAuthCheck = useSelector(getIsAuthCheckSelector);
-  const userInfo: UserInfo = {
-    userName: localStorage.getItem('userName') || '',
-    userEmail: localStorage.getItem('userEmail') || ''
-  };
-  const isUserAuthorized = Boolean(userInfo.userName && userInfo.userEmail);
-  console.log(isUserAuthorized);
+  const userInfo = useSelector(getUserSelector);
 
   const location = useLocation();
 
@@ -36,19 +32,21 @@ export const ProtectedRoute = ({
     return <Preloader />;
   }
 
-  if (!onlyUnAuth && !isUserAuthorized) {
-    //  если маршрут для авторизованного пользователя, но пользователь неавторизован, то делаем редирект
-    return <Navigate replace to='/login' state={{ from: location }} />; // в поле from объекта location.state записываем информацию о URL
+  if (onlyUnAuth && userInfo) {
+    // return <Navigate replace to='/login' state={{ from: location }} />; // в поле from объекта location.state записываем информацию о URL
+    const from = (location.state as any)?.from || { pathname: '/' };
+    // console.log('a');
+    // console.log(onlyUnAuth, userInfo, from);
+    return <Navigate to={from} replace />;
   }
 
-  if (onlyUnAuth && isUserAuthorized) {
-    //  если маршрут для неавторизованного пользователя, но пользователь авторизован
-    // при обратном редиректе  получаем данные о месте назначения редиректа из объекта location.state
-    // в случае если объекта location.state?.from нет — а такое может быть , если мы зашли на страницу логина по прямому URL
-    // мы сами создаём объект c указанием адреса и делаем переадресацию на главную страницу
-    const from = location.state?.from || { pathname: '/' };
+  if (!onlyUnAuth && !userInfo) {
+    // console.log('locationState: ', location.state?.from);
+    // const from = location.state?.from || { pathname: '/' };
 
-    return <Navigate replace to={from} />;
+    // return <Navigate replace to={from} />;
+    console.log('b');
+    return <Navigate to='/login' state={{ from: location }} replace />;
   }
 
   return children;

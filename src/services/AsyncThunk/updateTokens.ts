@@ -7,7 +7,7 @@ export const updateTokensThunk = createAsyncThunk<
   { rejectValue: string }
 >('tokens/updateTokens', async (_, { rejectWithValue }) => {
   try {
-    prompt('обновление токенов');
+    // prompt('обновление токенов');
     const data = await refreshToken();
     return data;
   } catch (error: any) {

@@ -1,13 +1,14 @@
 import { Preloader } from '@ui';
 import { LoginUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { autorizationThunk } from '../../services/AsyncThunk/autorizationUserThunk';
 import {
   errorAuthSelector,
   isSuccessAuthSelector
 } from '../../services/Slices/autorizationSlice.slice';
 import { useDispatch, useSelector } from '../../services/store';
+import { getUserThunk } from '../../services/AsyncThunk/userThunk';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -17,17 +18,30 @@ export const Login: FC = () => {
   const isLoading = useSelector((state) => state.autorizationSlice.isLoading);
   const isSuccessAuth = useSelector(isSuccessAuthSelector);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const from = (location.state as any)?.from || '/';
+
+  // const handleSubmit = (e: SyntheticEvent) => {
+  //   e.preventDefault();
+  //   dispatch(autorizationThunk({ email, password }));
+  // };
+
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(autorizationThunk({ email, password }));
+    const resultAction = await dispatch(autorizationThunk({ email, password }));
+
+    if (autorizationThunk.fulfilled.match(resultAction)) {
+      await dispatch(getUserThunk());
+      navigate(from, { replace: true });
+    }
   };
 
-  useEffect(() => {
-    if (isSuccessAuth) {
-      navigate('/profile', { replace: true });
-    }
-  }, [isSuccessAuth, navigate]);
+  // useEffect(() => {
+  //   if (isSuccessAuth) {
+  //     navigate(from, { replace: true });
+  //   }
+  // }, [from]);
 
   return isLoading ? (
     <Preloader />

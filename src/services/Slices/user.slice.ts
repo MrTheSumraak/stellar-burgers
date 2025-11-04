@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
+import { logoutThunk } from '../AsyncThunk/logoutThunk';
 import { getUserThunk, updateUserThunk } from '../AsyncThunk/userThunk';
 
 interface IInitialState {
@@ -69,6 +70,10 @@ const userSlice = createSlice({
         state.success = false;
         state.hasError =
           action.error.message || 'Ошибка обновления пользователя';
+      })
+
+      .addCase(logoutThunk.fulfilled, (state) => {
+        state.user = null;
       })
 });
 

@@ -8,8 +8,8 @@ export const logoutThunk = createAsyncThunk(
     try {
       const response = await logoutApi();
       localStorage.removeItem('refreshToken');
-      localStorage.removeItem('userName');
-      localStorage.removeItem('userEmail');
+      // localStorage.removeItem('userName');
+      // localStorage.removeItem('userEmail');
       deleteCookie('accessToken');
       return response;
     } catch (error) {

@@ -1,11 +1,11 @@
 import { FC, memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { OrderCardProps } from './type';
 import { TIngredient } from '@utils-types';
-import { OrderCardUI } from '../ui/order-card';
-import { useSelector } from '../../services/store';
 import { ingredientsSelector } from '../../services/Slices/ingridient.slice';
+import { useSelector } from '../../services/store';
+import { OrderCardUI } from '../ui/order-card';
+import { OrderCardProps } from './type';
 
 const maxIngredients = 6;
 
@@ -46,6 +46,8 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
       date
     };
   }, [order, ingredients]);
+
+  console.log('ddd', orderInfo);
 
   if (!orderInfo) return null;
 

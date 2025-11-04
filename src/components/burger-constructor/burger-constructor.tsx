@@ -12,6 +12,7 @@ import {
   orderModalDataSelector,
   ordersLoading
 } from '../../services/Slices/createOrder.slice';
+import { getUserSelector } from '../../services/Slices/user.slice';
 import { RootState, useDispatch, useSelector } from '../../services/store';
 
 export const BurgerConstructor: FC = () => {
@@ -20,8 +21,8 @@ export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
   const errorOrder = useSelector(errorCreateOrderSelector);
   const userData: Partial<TRegisterData> = {
-    name: localStorage.getItem('userName') || '',
-    email: localStorage.getItem('userEmail') || ''
+    name: useSelector(getUserSelector)?.name || '',
+    email: useSelector(getUserSelector)?.email || ''
   };
 
   const currentIngredient = useSelector(
@@ -47,6 +48,7 @@ export const BurgerConstructor: FC = () => {
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
     dispatch(updateUserThunk(userData));
+    if (!userData) return console.error('нет юзера');
     dispatch(createOrderThunk());
   };
 

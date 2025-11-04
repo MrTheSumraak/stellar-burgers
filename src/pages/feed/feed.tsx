@@ -8,6 +8,7 @@ import {
   loadingSelector
 } from '../../services/Slices/order.slice';
 import { useDispatch, useSelector } from '../../services/store';
+import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
@@ -15,13 +16,16 @@ export const Feed: FC = () => {
   const orders: TOrder[] = useSelector(getOrdersSelector);
 
   useEffect(() => {
-    dispatch(getFeedsThunk());
-  }, [dispatch]);
+    console.log(orders);
+    dispatch(ingredientsThunk());
+    !orders.length && dispatch(getFeedsThunk());
+  }, [dispatch, orders]);
 
   /** TODO: взять переменную из стора */
 
   const handleGetFeeds = () => {
     dispatch(getFeedsThunk());
+    console.log(orders);
   };
 
   return isLoading ? (

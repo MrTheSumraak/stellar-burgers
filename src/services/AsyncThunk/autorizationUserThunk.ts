@@ -5,16 +5,16 @@ import {
   TLoginData
 } from '../../utils/burger-api';
 import { setCookie } from '../../utils/cookie';
+import { getUserThunk } from './userThunk';
 
 export const autorizationThunk = createAsyncThunk(
   'authorization/user',
-  async (data: TLoginData) => {
+  async (data: TLoginData, thunkAPI) => {
     try {
       const response = await loginUserApi(data);
-      localStorage.setItem('userName', response.user.name);
-      localStorage.setItem('userEmail', response.user.email);
       localStorage.setItem('refreshToken', response.refreshToken || '');
       setCookie('accessToken', response.accessToken || '');
+      await thunkAPI.dispatch(getUserThunk());
       return response;
     } catch (error) {
       return Promise.reject(error);

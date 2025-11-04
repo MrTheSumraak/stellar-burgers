@@ -13,7 +13,7 @@ export const ProfileMenu: FC = () => {
 
   useEffect(() => {
     isSuccess && navigate('/login');
-  }, [isSuccess]);
+  }, [isSuccess, navigate]);
 
   const handleLogout = () => {
     dispatch(logoutThunk());

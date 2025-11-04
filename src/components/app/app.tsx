@@ -14,23 +14,27 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../services/store';
+import { useEffect } from 'react';
+import { updateTokensThunk } from '../../services/AsyncThunk/updateTokens';
+import { getUserThunk } from '../../services/AsyncThunk/userThunk';
+import { getUserSelector } from '../../services/Slices/user.slice';
+import { AppDispatch, useDispatch, useSelector } from '../../services/store';
 import { SuccessModalButton } from '../modal/successModal';
 import { ProtectedRoute } from '../protected-route/ProtectedRoute';
-import { useEffect } from 'react';
-import { getUserThunk } from '../../services/AsyncThunk/userThunk';
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
+  const userSelector = useSelector(getUserSelector);
   const location = useLocation();
   const backgroundLocation =
     location.state && (location.state as { background: Location })?.background;
   const navigation = useNavigate();
 
-  // useEffect(() => {
-  //   dispatch(getUserThunk());
-  // }, [dispatch]);
+  useEffect(() => {
+    console.log('app rend');
+    dispatch(updateTokensThunk());
+    dispatch(getUserThunk());
+  }, [dispatch]);
 
   return (
     <>
@@ -85,6 +89,59 @@ const App = () => {
               <ProtectedRoute>
                 <ProfileOrders />
               </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal
+                onClose={() => {
+                  navigation(-1);
+                }}
+                title=''
+              >
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal
+                onClose={() => {
+                  navigation(-1);
+                }}
+                title='Детали ингредиента'
+              >
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <Modal
+                  onClose={() => {
+                    navigation(-1);
+                  }}
+                  title=''
+                >
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/register/success'
+            element={
+              <Modal
+                title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
+                onClose={() => navigation(-1)}
+              >
+                <SuccessModalButton />
+              </Modal>
             }
           />
           <Route path='*' element={<NotFound404 />} />

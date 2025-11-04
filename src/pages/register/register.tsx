@@ -1,7 +1,7 @@
 import { Preloader } from '@ui';
 import { RegisterUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { registerThunk } from '../../services/AsyncThunk/registerUserThunk';
 import {
   errorRegisterSelector,
@@ -23,6 +23,7 @@ export const Register: FC = () => {
   const isLoading = useSelector(registerLoadingSelector);
   const errorMessage = useSelector(errorRegisterSelector);
   const isSucess = useSelector(registerSuccessSelector);
+  const location = useLocation();
 
   // навигация при успехе
   useEffect(() => {

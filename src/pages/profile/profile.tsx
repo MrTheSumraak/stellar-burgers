@@ -6,15 +6,16 @@ import {
   updateUserThunk
 } from '../../services/AsyncThunk/userThunk';
 import { isLoadingLogout } from '../../services/Slices/logoutSlice.slice';
-import { getIsLoadingSelector } from '../../services/Slices/user.slice';
+import {
+  getIsLoadingSelector,
+  getUserSelector
+} from '../../services/Slices/user.slice';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
-  const userName = localStorage.getItem('userName') ?? '';
-  const emailUser = localStorage.getItem('userEmail') ?? '';
-  // const userName = useSelector(userNameSelector) ?? '';
-  // const emailUser = useSelector(userEmailSelector) ?? '';
+  const userName = useSelector(getUserSelector)?.name ?? '';
+  const emailUser = useSelector(getUserSelector)?.email ?? '';
   const isLogoutLoading = useSelector(isLoadingLogout);
   const isUpdateloading = useSelector(getIsLoadingSelector);
   const dispatch = useDispatch();
@@ -25,11 +26,11 @@ export const Profile: FC = () => {
     password: ''
   });
 
-  useEffect(() => {
-    if (!userName || !emailUser) {
-      dispatch(getUserThunk());
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (!userName || !emailUser) {
+  //     dispatch(getUserThunk());
+  //   }
+  // }, [dispatch]);
 
   useEffect(() => {
     setFormValue((prevState) => {
@@ -46,7 +47,11 @@ export const Profile: FC = () => {
         password: ''
       };
     });
-  }, [userName, emailUser]);
+
+    if (!userName || !emailUser) {
+      dispatch(getUserThunk());
+    }
+  }, [userName, emailUser, dispatch]);
 
   const isFormChanged =
     formValue.name !== userName ||
@@ -55,7 +60,7 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    formValue && dispatch(updateUserThunk(formValue));
+    dispatch(updateUserThunk(formValue));
   };
 
   const handleCancel = (e: SyntheticEvent) => {
