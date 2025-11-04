@@ -24,15 +24,18 @@ import { ProtectedRoute } from '../protected-route/ProtectedRoute';
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
-  const userSelector = useSelector(getUserSelector);
   const location = useLocation();
+  const user = useSelector(getUserSelector);
   const backgroundLocation =
     location.state && (location.state as { background: Location })?.background;
   const navigation = useNavigate();
+  const closeModal = () => {
+    navigation(-1);
+  };
 
   useEffect(() => {
     console.log('app rend');
-    dispatch(updateTokensThunk());
+    user && dispatch(updateTokensThunk());
     dispatch(getUserThunk());
   }, [dispatch]);
 
@@ -95,12 +98,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal
-                onClose={() => {
-                  navigation(-1);
-                }}
-                title=''
-              >
+              <Modal onClose={closeModal} title=''>
                 <OrderInfo />
               </Modal>
             }
@@ -108,12 +106,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal
-                onClose={() => {
-                  navigation(-1);
-                }}
-                title='Детали ингредиента'
-              >
+              <Modal onClose={closeModal} title='Детали ингредиента'>
                 <IngredientDetails />
               </Modal>
             }
@@ -122,12 +115,7 @@ const App = () => {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal
-                  onClose={() => {
-                    navigation(-1);
-                  }}
-                  title=''
-                >
+                <Modal onClose={closeModal} title=''>
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>
@@ -138,7 +126,7 @@ const App = () => {
             element={
               <Modal
                 title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
-                onClose={() => navigation(-1)}
+                onClose={closeModal}
               >
                 <SuccessModalButton />
               </Modal>
@@ -152,12 +140,7 @@ const App = () => {
             <Route
               path='/feed/:number'
               element={
-                <Modal
-                  onClose={() => {
-                    navigation(-1);
-                  }}
-                  title=''
-                >
+                <Modal onClose={closeModal} title=''>
                   <OrderInfo />
                 </Modal>
               }
@@ -165,12 +148,7 @@ const App = () => {
             <Route
               path='/ingredients/:id'
               element={
-                <Modal
-                  onClose={() => {
-                    navigation(-1);
-                  }}
-                  title='Детали ингредиента'
-                >
+                <Modal onClose={closeModal} title='Детали ингредиента'>
                   <IngredientDetails />
                 </Modal>
               }
@@ -179,12 +157,7 @@ const App = () => {
               path='/profile/orders/:number'
               element={
                 <ProtectedRoute>
-                  <Modal
-                    onClose={() => {
-                      navigation(-1);
-                    }}
-                    title=''
-                  >
+                  <Modal onClose={closeModal} title=''>
                     <OrderInfo />
                   </Modal>
                 </ProtectedRoute>
@@ -195,7 +168,7 @@ const App = () => {
               element={
                 <Modal
                   title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
-                  onClose={() => navigation(-1)}
+                  onClose={closeModal}
                 >
                   <SuccessModalButton />
                 </Modal>

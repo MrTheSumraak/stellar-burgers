@@ -48,7 +48,9 @@ export const BurgerConstructor: FC = () => {
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
     dispatch(updateUserThunk(userData));
-    if (!userData) return console.error('нет юзера');
+    if (!userData || (userData.name === '' && userData.email === ''))
+      return console.error('нет юзера');
+    console.log(userData);
     dispatch(createOrderThunk());
   };
 

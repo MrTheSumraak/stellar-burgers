@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { TIngredient, TTabMode } from '@utils-types';
@@ -14,12 +14,17 @@ export const BurgerIngredients: FC = () => {
     !ingredients.length && dispatch(ingredientsThunk());
   }, [dispatch, ingredients.length]);
 
-  const buns: TIngredient[] = ingredients.filter((item) => item.type === 'bun');
-  const mains: TIngredient[] = ingredients.filter(
-    (item) => item.type === 'main'
+  const buns: TIngredient[] = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === 'bun'),
+    [ingredients]
   );
-  const sauces: TIngredient[] = ingredients.filter(
-    (item) => item.type === 'sauce'
+  const mains: TIngredient[] = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === 'main'),
+    [ingredients]
+  );
+  const sauces: TIngredient[] = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === 'sauce'),
+    [ingredients]
   );
   /** TODO: взять переменные из стора */
 

@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
 import {
-  Input,
   Button,
+  Input,
   PasswordInput
 } from '@zlden/react-developer-burger-ui-components';
-import styles from '../common.module.css';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import styles from '../common.module.css';
 import { LoginUIProps } from './type';
 
 export const LoginUI: FC<LoginUIProps> = ({
@@ -14,9 +14,7 @@ export const LoginUI: FC<LoginUIProps> = ({
   errorText,
   handleSubmit,
   password,
-  setPassword,
-  emailRef,
-  passwordRef
+  setPassword
 }) => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
@@ -30,7 +28,6 @@ export const LoginUI: FC<LoginUIProps> = ({
           <div className='pb-6'>
             <Input
               type='email'
-              ref={emailRef}
               placeholder='E-mail'
               onChange={(e) => setEmail(e.target.value)}
               value={email}
@@ -44,7 +41,6 @@ export const LoginUI: FC<LoginUIProps> = ({
             <PasswordInput
               onChange={(e) => setPassword(e.target.value)}
               value={password}
-              ref={passwordRef}
               name='password'
             />
           </div>
