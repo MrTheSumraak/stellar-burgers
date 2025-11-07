@@ -6,12 +6,14 @@ type IInitialState = {
   isLoading?: boolean;
   success?: boolean;
   hasError?: string;
+  onModalopen?: boolean;
 };
 
 const initialState: IInitialState = {
   isLoading: false,
   success: false,
-  hasError: ''
+  hasError: '',
+  onModalopen: false
 };
 
 type IRegistrationAction<T> = {
@@ -22,12 +24,20 @@ type IRegistrationAction<T> = {
 
 export const registerSlice = createSlice({
   name: 'registerSlice',
-  reducers: {},
   initialState,
+  reducers: {
+    showRegistrationSuccessModal: (state) => {
+      state.onModalopen = true;
+    },
+    closeRegistrationSuccessModal: (state) => {
+      state.onModalopen = false;
+    }
+  },
   selectors: {
     registerLoadingSelector: (state) => state.isLoading,
     errorRegisterSelector: (state) => state.hasError,
-    registerSuccessSelector: (state) => state.success
+    registerSuccessSelector: (state) => state.success,
+    regSuccessSelector: (state) => state.onModalopen
   },
   extraReducers: (builder) => {
     builder
@@ -55,6 +65,9 @@ export const { reducer } = registerSlice;
 export const {
   registerLoadingSelector,
   errorRegisterSelector,
-  registerSuccessSelector
+  registerSuccessSelector,
+  regSuccessSelector
 } = registerSlice.selectors;
+export const { showRegistrationSuccessModal, closeRegistrationSuccessModal } =
+  registerSlice.actions;
 export default registerSlice.reducer;

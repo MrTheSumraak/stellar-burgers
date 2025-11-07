@@ -28,17 +28,9 @@ export const Register: FC = () => {
   // навигация при успехе
   useEffect(() => {
     if (isSucess) {
-      navigation('/register/success', {
-        state: {
-          background: {
-            pathname: location.pathname,
-            search: location.search,
-            hash: location.hash
-          }
-        }
-      });
+      navigation('/login', { replace: true });
     }
-  }, [isSucess, navigation, location]);
+  }, [isSucess]);
 
   const formData = useMemo(
     () => ({ name: userName, email, password }),

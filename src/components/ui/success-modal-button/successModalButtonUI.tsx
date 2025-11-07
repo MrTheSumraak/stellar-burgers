@@ -1,5 +1,4 @@
 import { Button } from '@zlden/react-developer-burger-ui-components';
-import { ReactNode } from 'react';
 import styles from './successButton.module.css';
 
 interface Props {

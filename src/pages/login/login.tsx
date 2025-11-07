@@ -22,11 +22,6 @@ export const Login: FC = () => {
 
   const from = (location.state as any)?.from || '/';
 
-  // const handleSubmit = (e: SyntheticEvent) => {
-  //   e.preventDefault();
-  //   dispatch(autorizationThunk({ email, password }));
-  // };
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const resultAction = await dispatch(autorizationThunk({ email, password }));
@@ -36,12 +31,6 @@ export const Login: FC = () => {
       navigate(from, { replace: true });
     }
   };
-
-  // useEffect(() => {
-  //   if (isSuccessAuth) {
-  //     navigate(from, { replace: true });
-  //   }
-  // }, [from]);
 
   return isLoading ? (
     <Preloader />

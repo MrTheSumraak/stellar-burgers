@@ -4,7 +4,7 @@ import { TOrder } from '@utils-types';
 import { RootState } from '../store';
 
 export const createOrderThunk = createAsyncThunk<
-  TOrder,
+  TNewOrderResponse,
   void,
   { state: RootState; rejectValue: string }
 >('order/createOrder', async (_, { getState, rejectWithValue }) => {
@@ -22,7 +22,7 @@ export const createOrderThunk = createAsyncThunk<
 
     const payloadIds = [bunId, ...currentIngredientIds, bunId];
     const res: TNewOrderResponse = await orderBurgerApi(payloadIds);
-    return res.order;
+    return res;
   } catch (error: any) {
     return rejectWithValue(error?.message || 'Ошибка оформления заказа');
   }

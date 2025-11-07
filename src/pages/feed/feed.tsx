@@ -16,7 +16,6 @@ export const Feed: FC = () => {
   const orders: TOrder[] = useSelector(getOrdersSelector);
 
   useEffect(() => {
-    console.log(orders);
     dispatch(ingredientsThunk());
     !orders.length && dispatch(getFeedsThunk());
   }, [dispatch, orders]);
@@ -25,7 +24,6 @@ export const Feed: FC = () => {
 
   const handleGetFeeds = () => {
     dispatch(getFeedsThunk());
-    console.log(orders);
   };
 
   return isLoading ? (

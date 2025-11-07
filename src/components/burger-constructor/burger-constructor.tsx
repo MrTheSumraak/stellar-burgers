@@ -4,11 +4,11 @@ import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createOrderThunk } from '../../services/AsyncThunk/createOrderThunk';
-import { updateUserThunk } from '../../services/AsyncThunk/userThunk';
 import { clearConstructor } from '../../services/Slices/constructorIngridients.slice';
 import {
   closeModalData,
   errorCreateOrderSelector,
+  isSuccessCreateOrderSelector,
   orderModalDataSelector,
   ordersLoading
 } from '../../services/Slices/createOrder.slice';
@@ -19,6 +19,7 @@ export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const success = useSelector(isSuccessCreateOrderSelector);
   const errorOrder = useSelector(errorCreateOrderSelector);
   const userData: Partial<TRegisterData> = {
     name: useSelector(getUserSelector)?.name || '',
@@ -47,16 +48,14 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
-    dispatch(updateUserThunk(userData));
     if (!userData || (userData.name === '' && userData.email === ''))
-      return console.error('нет юзера');
-    console.log(userData);
+      return navigate('/login');
     dispatch(createOrderThunk());
   };
 
   const closeOrderModal = () => {
     dispatch(closeModalData());
-    dispatch(clearConstructor());
+    success && dispatch(clearConstructor());
   };
 
   const price = useMemo(

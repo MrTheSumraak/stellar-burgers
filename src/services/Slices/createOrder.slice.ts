@@ -1,3 +1,4 @@
+import { TNewOrderResponse } from '@api';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 import { createOrderThunk } from '../AsyncThunk/createOrderThunk';
@@ -7,13 +8,15 @@ interface IInitialState {
   isLoading: boolean;
   orderModalData: TOrder | null;
   hasError: string | undefined;
+  success: boolean;
 }
 
 const initialState: IInitialState = {
   order: [],
   isLoading: false,
   orderModalData: null,
-  hasError: undefined
+  hasError: undefined,
+  success: false
 };
 
 const createOrderSlice = createSlice({
@@ -23,7 +26,8 @@ const createOrderSlice = createSlice({
     oredersSelectors: (state) => state.order,
     ordersLoading: (state) => state.isLoading,
     orderModalDataSelector: (state) => state.orderModalData,
-    errorCreateOrderSelector: (state) => state.hasError
+    errorCreateOrderSelector: (state) => state.hasError,
+    isSuccessCreateOrderSelector: (state) => state.success
   },
   reducers: {
     closeModalData: (state) => {
@@ -39,14 +43,16 @@ const createOrderSlice = createSlice({
       })
       .addCase(
         createOrderThunk.fulfilled,
-        (state, action: PayloadAction<TOrder>) => {
+        (state, action: PayloadAction<TNewOrderResponse>) => {
           state.isLoading = false;
-          state.order.push(action.payload);
-          state.orderModalData = action.payload;
+          state.success = action.payload.success;
+          state.order.push(action.payload.order);
+          state.orderModalData = action.payload.order;
         }
       )
       .addCase(createOrderThunk.rejected, (state, action) => {
         state.isLoading = false;
+        state.success = false;
         state.hasError = action.error.message || 'Ошибка создания заказа';
       });
   }
@@ -60,5 +66,6 @@ export const {
   ordersLoading,
   oredersSelectors,
   orderModalDataSelector,
-  errorCreateOrderSelector
+  errorCreateOrderSelector,
+  isSuccessCreateOrderSelector
 } = createOrderSlice.selectors;

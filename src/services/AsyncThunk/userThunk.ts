@@ -6,7 +6,6 @@ export const getUserThunk = createAsyncThunk('user/getUser', async () => {
     const response = await getUserApi();
     return response.user;
   } catch (error) {
-    console.log(error);
     return Promise.reject(error);
   }
 });

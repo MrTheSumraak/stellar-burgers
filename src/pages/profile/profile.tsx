@@ -26,12 +26,6 @@ export const Profile: FC = () => {
     password: ''
   });
 
-  // useEffect(() => {
-  //   if (!userName || !emailUser) {
-  //     dispatch(getUserThunk());
-  //   }
-  // }, [dispatch]);
-
   useEffect(() => {
     setFormValue((prevState) => {
       if (
@@ -77,7 +71,6 @@ export const Profile: FC = () => {
       ...prevState,
       [e.target.name]: e.target.value
     }));
-    console.log(formValue);
   };
 
   return isLogoutLoading ? (

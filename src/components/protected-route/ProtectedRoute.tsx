@@ -45,7 +45,6 @@ export const ProtectedRoute = ({
     // const from = location.state?.from || { pathname: '/' };
 
     // return <Navigate replace to={from} />;
-    console.log('b');
     return <Navigate to='/login' state={{ from: location }} replace />;
   }
 

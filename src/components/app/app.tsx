@@ -19,7 +19,6 @@ import { updateTokensThunk } from '../../services/AsyncThunk/updateTokens';
 import { getUserThunk } from '../../services/AsyncThunk/userThunk';
 import { getUserSelector } from '../../services/Slices/user.slice';
 import { AppDispatch, useDispatch, useSelector } from '../../services/store';
-import { SuccessModalButton } from '../modal/successModal';
 import { ProtectedRoute } from '../protected-route/ProtectedRoute';
 
 const App = () => {
@@ -34,7 +33,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log('app rend');
     user && dispatch(updateTokensThunk());
     dispatch(getUserThunk());
   }, [dispatch]);
@@ -121,17 +119,21 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/* TODO: доделать модальное окно успешной регистрации после сдачи работы */}
+
+          {/* <Route
             path='/register/success'
             element={
-              <Modal
-                title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
-                onClose={closeModal}
-              >
-                <SuccessModalButton />
-              </Modal>
+              onModal && (
+                <Modal
+                  title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
+                  onClose={closeModal}
+                >
+                  <SuccessModalButton />
+                </Modal>
+              )
             }
-          />
+          /> */}
           <Route path='*' element={<NotFound404 />} />
         </Routes>
 
@@ -163,17 +165,19 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            <Route
+            {/* <Route
               path='/register/success'
               element={
-                <Modal
-                  title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
-                  onClose={closeModal}
-                >
-                  <SuccessModalButton />
-                </Modal>
+                onModal ? (
+                  <Modal
+                    title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
+                    onClose={() => dispatch(closeRegistrationSuccessModal())}
+                  >
+                    <SuccessModalButton />
+                  </Modal>
+                ) : null
               }
-            />
+            /> */}
           </Routes>
         )}
       </div>

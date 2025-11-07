@@ -1,6 +1,7 @@
 import { TIngredient } from '@utils-types';
 import { FC, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
+import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
 import { getOrderByNumber } from '../../services/AsyncThunk/orderThunk';
 import { ingredientsSelector } from '../../services/Slices/ingridient.slice';
 import { currentOrderSelector } from '../../services/Slices/order.slice';
@@ -11,14 +12,13 @@ import { Preloader } from '../ui/preloader';
 export const OrderInfo: FC = () => {
   const { number } = useParams();
   const dispatch = useDispatch();
+  const orderData = useSelector(currentOrderSelector);
+  const ingredients: TIngredient[] = useSelector(ingredientsSelector);
 
   useEffect(() => {
-    if (number) dispatch(getOrderByNumber(Number(number)));
+    number && dispatch(getOrderByNumber(Number(number)));
+    !ingredients.length && dispatch(ingredientsThunk());
   }, [dispatch, number]);
-
-  const orderData = useSelector(currentOrderSelector);
-
-  const ingredients: TIngredient[] = useSelector(ingredientsSelector);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -62,9 +62,5 @@ export const OrderInfo: FC = () => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
-    return <Preloader />;
-  }
-
-  return <OrderInfoUI orderInfo={orderInfo} />;
+  return !orderInfo ? <Preloader /> : <OrderInfoUI orderInfo={orderInfo} />;
 };

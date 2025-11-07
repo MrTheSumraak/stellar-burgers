@@ -82,13 +82,17 @@ module.exports = {
     }
   },
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js'
   },
   devServer: {
     static: path.join(__dirname, './dist'),
     compress: true,
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true,
+      index: '/index.html'
+    },
     port: 4001
   }
 };
