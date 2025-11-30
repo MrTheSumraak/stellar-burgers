@@ -1,14 +1,25 @@
-import { FC } from 'react';
-import { Preloader } from '../ui/preloader';
+import { FC, useEffect } from 'react';
+import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
+import { ingredientsSelector } from '../../services/Slices/ingridient.slice';
+import { useDispatch, useSelector } from '../../services/store';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
+import { Preloader } from '../ui/preloader';
 
 export const IngredientDetails: FC = () => {
   /** TODO: взять переменную из стора */
-  const ingredientData = null;
+  const dispatch = useDispatch();
+  const ingredients = useSelector(ingredientsSelector);
+  const ingredientData = ingredients.find((item) => item);
 
-  if (!ingredientData) {
-    return <Preloader />;
-  }
+  useEffect(() => {
+    if (!ingredientData) {
+      dispatch(ingredientsThunk());
+    }
+  }, [dispatch, ingredientData]);
 
-  return <IngredientDetailsUI ingredientData={ingredientData} />;
+  return !ingredientData ? (
+    <Preloader />
+  ) : (
+    <IngredientDetailsUI ingredientData={ingredientData} />
+  );
 };
