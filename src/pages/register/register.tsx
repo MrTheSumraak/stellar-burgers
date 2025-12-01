@@ -7,8 +7,8 @@ import {
   errorRegisterSelector,
   registerLoadingSelector,
   registerSuccessSelector
-} from '../../services/Slices/register.slice';
-import { useDispatch, useSelector } from '../../services/store';
+} from '../../services/Slices/register-slice/register.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 import { validateregisterForm } from '../../utils/validation';
 
 export const Register: FC = () => {

@@ -2,13 +2,13 @@ import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
+import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
 import { getFeedsThunk } from '../../services/AsyncThunk/orderThunk';
 import {
   getOrdersSelector,
   loadingSelector
-} from '../../services/Slices/order.slice';
-import { useDispatch, useSelector } from '../../services/store';
-import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
+} from '../../services/Slices/order-slice/order.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();

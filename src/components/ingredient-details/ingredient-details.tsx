@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
-import { ingredientsSelector } from '../../services/Slices/ingridient.slice';
-import { useDispatch, useSelector } from '../../services/store';
+import { ingredientsSelector } from '../../services/Slices/ingridient-slice/ingridient.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
 import { Preloader } from '../ui/preloader';
 

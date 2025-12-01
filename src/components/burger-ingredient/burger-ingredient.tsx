@@ -5,8 +5,8 @@ import { BurgerIngredientUI } from '@ui';
 import {
   setBunWithId,
   setIngredientWithId
-} from '../../services/Slices/constructorIngridients.slice';
-import { useDispatch, useSelector } from '../../services/store';
+} from '../../services/Slices/constructorIngridientsSlice/constructorIngridients.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 import { TBurgerIngredientProps } from './type';
 
 export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(

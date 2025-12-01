@@ -6,8 +6,8 @@ import { getOrdersThunk } from '../../services/AsyncThunk/orderThunk';
 import {
   profileIsLoadingSelector,
   profileOrdersSelector
-} from '../../services/Slices/profileOrders.slice';
-import { useDispatch, useSelector } from '../../services/store';
+} from '../../services/Slices/profileOrders-slice/profileOrders.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 
 export const ProfileOrders: FC = () => {
   /** TODO: взять переменную из стора */

@@ -2,8 +2,8 @@ import { ProfileMenuUI } from '@ui';
 import { FC, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { logoutThunk } from '../../services/AsyncThunk/logoutThunk';
-import { useDispatch, useSelector } from '../../services/store';
-import { isSuccessLogout } from '../../services/Slices/logoutSlice.slice';
+import { isSuccessLogout } from '../../services/Slices/logoutSlice/logoutSlice.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 
 export const ProfileMenu: FC = () => {
   const { pathname } = useLocation();

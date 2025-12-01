@@ -1,7 +1,7 @@
 import { TIngredient } from '@utils-types';
 import { forwardRef, useMemo } from 'react';
-import { getIdBun } from '../../services/Slices/constructorIngridients.slice';
-import { useSelector } from '../../services/store';
+import { getIdBun } from '../../services/Slices/constructorIngridientsSlice/constructorIngridients.slice';
+import { useSelector } from '../../services/store/store';
 import { IngredientsCategoryUI } from '../ui/ingredients-category';
 import { TIngredientsCategoryProps } from './type';
 
