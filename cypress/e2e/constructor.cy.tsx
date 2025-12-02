@@ -45,21 +45,15 @@ describe('Конструктор бургеров', () => {
   });
 
   it('добавление булки в конструктор', () => {
-    cy.get("[data-type='bun']")
-      .first()
-      .within(() => {
-        cy.contains('Добавить').click();
-      });
-    cy.contains('Выберите булку').should('not.exist');
+    cy.get("[data-type='bun']").first().find("button[type='button']").click();
+
+    cy.get("[data-placeholder='no-bun']").should('not.exist');
   });
 
   it('добавление ингридиента в конструктор', () => {
-    cy.get("[data-type='main']")
-      .first()
-      .within(() => {
-        cy.contains('Добавить').click();
-      });
-    cy.contains('Выберите начинку').should('not.exist');
+    cy.get("[data-type='main']").first().find("button[type='button']").click();
+
+    cy.get("[data-placeholder='no-filling']").should('not.exist');
   });
 
   it('открытие и закрытие модального окна булки', () => {
@@ -101,11 +95,11 @@ describe('Конструктор бургеров', () => {
 
   it('создание заказа', () => {
     // Добавляем булку и начинку
-    cy.contains('Булка').parent().find('button').click();
-    cy.contains('Котлета').parent().find('button').click();
+    cy.get("[data-type='bun']").first().find("button[type='button']").click();
+    cy.get("[data-type='main']").first().find("button[type='button']").click();
 
     // Кликаем "Оформить заказ"
-    cy.contains('Оформить заказ').click();
+    cy.get("[data-btn='making-an-order']").click();
 
     // Проверяем, что модалка открылась и номер заказа верный
     cy.wait('@createOrder');
@@ -116,7 +110,7 @@ describe('Конструктор бургеров', () => {
     cy.get('#modals').find('button').click();
 
     // Проверяем, что конструктор пуст
-    cy.contains('Выберите булки').should('exist');
-    cy.contains('Выберите начинку').should('exist');
+    cy.get("[data-placeholder='no-bun']").should('exist');
+    cy.get("[data-placeholder='no-filling']").should('exist');
   });
 });

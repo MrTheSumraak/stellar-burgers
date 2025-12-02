@@ -15,7 +15,7 @@
       "image_mobile": "/images/bun1_mobile.png"
     },
     {
-      "_id": "bun1",
+      "_id": "bun2",
       "name": "А когда не булка",
       "type": "bun",
       "proteins": 10,
@@ -41,7 +41,7 @@
       "image_mobile": "/images/meat_mobile.png"
     },
     {
-      "_id": "main1",
+      "_id": "main2",
       "name": "NeКотлета",
       "type": "main",
       "proteins": 25,
@@ -67,7 +67,7 @@
       "image_mobile": "/images/sauce_mobile.png"
     },
     {
-      "_id": "sauce1",
+      "_id": "sauce2",
       "name": "Соус не фирменный",
       "type": "sauce",
       "proteins": 1,
