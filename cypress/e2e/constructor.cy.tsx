@@ -34,7 +34,7 @@ describe('Конструктор бургеров', () => {
       }).as('createOrder');
     });
 
-    cy.visit('http://localhost:4001/');
+    cy.visit('/');
     cy.wait('@getIngredients');
   });
 
@@ -63,10 +63,40 @@ describe('Конструктор бургеров', () => {
   });
 
   it('открытие и закрытие модального окна булки', () => {
-    cy.get("[data-type='bun']").first().click();
-    cy.get('#modals').should('exist');
-    // закрытие по крестику
-    cy.get('#modals').find('button').click();
+    // сохраняем название первой булки
+    cy.get("[data-type='bun']")
+      .first()
+      .find('[data-class=bunName')
+      .invoke('text')
+      .then((bunName) => {
+        // кликаем по булке
+        cy.get("[data-type='bun']").first().click();
+
+        // проверяем, что модалка открылась
+        cy.get('#modals').should('exist');
+
+        // проверяем, что в модалке отображается именно эта булка
+        cy.get('#modals').contains(bunName).should('exist');
+
+        // закрытие по крестику
+        cy.get('#modals').find('button').click();
+      });
+  });
+
+  it('открытие и закрытие модального окна ингридиента', () => {
+    cy.get("[data-type='main']")
+      .first()
+      .find('[data-class=mainName')
+      .invoke('text')
+      .then((mainName) => {
+        cy.get("[data-type='main']").first().click();
+
+        cy.get('#modals').should('exist');
+
+        cy.get('#modals').contains(mainName).should('exist');
+
+        cy.get('#modals').find('button').click();
+      });
   });
 
   it('создание заказа', () => {

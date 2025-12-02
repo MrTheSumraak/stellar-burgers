@@ -15,11 +15,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
     const { image, price, name, _id, type } = ingredient;
 
     return (
-      <li
-        data-type={type}
-        className={styles.container}
-        // data-testid='ingredient-card'
-      >
+      <li data-type={type} className={styles.container}>
         <Link
           className={styles.article}
           to={`/ingredients/${_id}`}
@@ -31,7 +27,12 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
             <p className='text text_type_digits-default mr-2'>{price}</p>
             <CurrencyIcon type='primary' />
           </div>
-          <p className={`text text_type_main-default ${styles.text}`}>{name}</p>
+          <p
+            data-class={type === 'bun' ? 'bunName' : 'mainName'}
+            className={`text text_type_main-default ${styles.text}`}
+          >
+            {name}
+          </p>
         </Link>
         <AddButton
           text='Добавить'
