@@ -3,8 +3,8 @@ import { useInView } from 'react-intersection-observer';
 
 import { TIngredient, TTabMode } from '@utils-types';
 import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
-import { ingredientsSelector } from '../../services/Slices/ingridient.slice';
-import { useDispatch, useSelector } from '../../services/store';
+import { ingredientsSelector } from '../../services/Slices/ingridient-slice/ingridient.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 
 export const BurgerIngredients: FC = () => {

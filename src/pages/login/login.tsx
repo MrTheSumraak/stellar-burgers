@@ -1,14 +1,14 @@
 import { Preloader } from '@ui';
 import { LoginUI } from '@ui-pages';
-import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { FC, SyntheticEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { autorizationThunk } from '../../services/AsyncThunk/autorizationUserThunk';
+import { getUserThunk } from '../../services/AsyncThunk/userThunk';
 import {
   errorAuthSelector,
   isSuccessAuthSelector
-} from '../../services/Slices/autorizationSlice.slice';
-import { useDispatch, useSelector } from '../../services/store';
-import { getUserThunk } from '../../services/AsyncThunk/userThunk';
+} from '../../services/Slices/autorizationSlice -slice/autorizationSlice.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');

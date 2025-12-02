@@ -1,15 +1,17 @@
 import { FC, useEffect } from 'react';
 import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
-import { ingredientsSelector } from '../../services/Slices/ingridient.slice';
-import { useDispatch, useSelector } from '../../services/store';
+import { ingredientsSelector } from '../../services/Slices/ingridient-slice/ingridient.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
 import { Preloader } from '../ui/preloader';
+import { useParams } from 'react-router-dom';
 
 export const IngredientDetails: FC = () => {
   /** TODO: взять переменную из стора */
   const dispatch = useDispatch();
+  const { id } = useParams();
   const ingredients = useSelector(ingredientsSelector);
-  const ingredientData = ingredients.find((item) => item);
+  const ingredientData = ingredients.find((item) => item._id === id);
 
   useEffect(() => {
     if (!ingredientData) {

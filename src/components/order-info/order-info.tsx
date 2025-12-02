@@ -3,9 +3,9 @@ import { FC, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { ingredientsThunk } from '../../services/AsyncThunk/ingredientsThunk';
 import { getOrderByNumber } from '../../services/AsyncThunk/orderThunk';
-import { ingredientsSelector } from '../../services/Slices/ingridient.slice';
-import { currentOrderSelector } from '../../services/Slices/order.slice';
-import { useDispatch, useSelector } from '../../services/store';
+import { ingredientsSelector } from '../../services/Slices/ingridient-slice/ingridient.slice';
+import { currentOrderSelector } from '../../services/Slices/order-slice/order.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 import { OrderInfoUI } from '../ui/order-info';
 import { Preloader } from '../ui/preloader';
 

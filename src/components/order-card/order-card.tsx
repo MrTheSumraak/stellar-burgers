@@ -2,8 +2,8 @@ import { FC, memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { TIngredient } from '@utils-types';
-import { ingredientsSelector } from '../../services/Slices/ingridient.slice';
-import { useSelector } from '../../services/store';
+import { ingredientsSelector } from '../../services/Slices/ingridient-slice/ingridient.slice';
+import { useSelector } from '../../services/store/store';
 import { OrderCardUI } from '../ui/order-card';
 import { OrderCardProps } from './type';
 

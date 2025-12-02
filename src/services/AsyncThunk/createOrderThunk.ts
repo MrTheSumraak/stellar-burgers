@@ -1,7 +1,6 @@
 import { orderBurgerApi, TNewOrderResponse } from '@api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { TOrder } from '@utils-types';
-import { RootState } from '../store';
+import { RootState } from '../store/store';
 
 export const createOrderThunk = createAsyncThunk<
   TNewOrderResponse,
@@ -22,6 +21,7 @@ export const createOrderThunk = createAsyncThunk<
 
     const payloadIds = [bunId, ...currentIngredientIds, bunId];
     const res: TNewOrderResponse = await orderBurgerApi(payloadIds);
+    console.log(res.name);
     return res;
   } catch (error: any) {
     return rejectWithValue(error?.message || 'Ошибка оформления заказа');

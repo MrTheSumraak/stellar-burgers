@@ -4,16 +4,20 @@ import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createOrderThunk } from '../../services/AsyncThunk/createOrderThunk';
-import { clearConstructor } from '../../services/Slices/constructorIngridients.slice';
+import { clearConstructor } from '../../services/Slices/constructorIngridientsSlice/constructorIngridients.slice';
 import {
   closeModalData,
   errorCreateOrderSelector,
   isSuccessCreateOrderSelector,
   orderModalDataSelector,
   ordersLoading
-} from '../../services/Slices/createOrder.slice';
-import { getUserSelector } from '../../services/Slices/user.slice';
-import { RootState, useDispatch, useSelector } from '../../services/store';
+} from '../../services/Slices/createOrder-slice/createOrder.slice';
+import { getUserSelector } from '../../services/Slices/user-slice/user.slice';
+import {
+  RootState,
+  useDispatch,
+  useSelector
+} from '../../services/store/store';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */

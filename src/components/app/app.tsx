@@ -17,8 +17,12 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useEffect } from 'react';
 import { updateTokensThunk } from '../../services/AsyncThunk/updateTokens';
 import { getUserThunk } from '../../services/AsyncThunk/userThunk';
-import { getUserSelector } from '../../services/Slices/user.slice';
-import { AppDispatch, useDispatch, useSelector } from '../../services/store';
+import { getUserSelector } from '../../services/Slices/user-slice/user.slice';
+import {
+  AppDispatch,
+  useDispatch,
+  useSelector
+} from '../../services/store/store';
 import { ProtectedRoute } from '../protected-route/ProtectedRoute';
 
 const App = () => {

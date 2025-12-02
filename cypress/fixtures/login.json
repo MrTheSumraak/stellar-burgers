@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "refreshToken": "refreshMock",
+  "accessToken": "accessMock",
+  "user": {
+    "email": "aKogdaNeEmail@yandex.ru",
+    "name": "BibaAndBobaVoin228"
+  }
+}

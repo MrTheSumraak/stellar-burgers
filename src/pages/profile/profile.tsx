@@ -5,12 +5,12 @@ import {
   getUserThunk,
   updateUserThunk
 } from '../../services/AsyncThunk/userThunk';
-import { isLoadingLogout } from '../../services/Slices/logoutSlice.slice';
+import { isLoadingLogout } from '../../services/Slices/logoutSlice/logoutSlice.slice';
 import {
   getIsLoadingSelector,
   getUserSelector
-} from '../../services/Slices/user.slice';
-import { useDispatch, useSelector } from '../../services/store';
+} from '../../services/Slices/user-slice/user.slice';
+import { useDispatch, useSelector } from '../../services/store/store';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */

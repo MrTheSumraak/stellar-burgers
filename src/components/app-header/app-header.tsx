@@ -3,8 +3,8 @@ import { FC } from 'react';
 import {
   errorUserSelector,
   getUserSelector
-} from '../../services/Slices/user.slice';
-import { useSelector } from '../../services/store';
+} from '../../services/Slices/user-slice/user.slice';
+import { useSelector } from '../../services/store/store';
 
 export const AppHeader: FC = () => {
   const errorUser = useSelector(errorUserSelector);

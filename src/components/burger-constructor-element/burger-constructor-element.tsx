@@ -3,8 +3,12 @@ import { FC, memo } from 'react';
 import {
   moveIngredient,
   removeIngredient
-} from '../../services/Slices/constructorIngridients.slice';
-import { RootState, useDispatch, useSelector } from '../../services/store';
+} from '../../services/Slices/constructorIngridientsSlice/constructorIngridients.slice';
+import {
+  RootState,
+  useDispatch,
+  useSelector
+} from '../../services/store/store';
 import { BurgerConstructorElementProps } from './type';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
